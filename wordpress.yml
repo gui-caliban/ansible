@@ -17,4 +17,18 @@
         - yum-utils
         - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
     - name: Enable remi-php73 repository
-      shell: sudo yum-config-manager --enable remi-php73
+      shell: yum-config-manager --enable remi-php73
+    - name: Install PHP 7
+      yum:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+        - php
+        - php-common
+        - php-opcache
+        - php-mcrypt
+        - php-cli
+        - php-gd
+        - php-curl
+        - php-mysqlnd
