@@ -32,8 +32,10 @@
         - php-gd
         - php-curl
         - php-mysql
-    # PHP
+    # MySQL
     - name: Get mysql repository
       get_url:
         url: https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm
         dest: /tmp
+    - name: Enable remi-php73 repository
+      shell: rpm -Uvh /tmp/mysql80-community-release-el7-1.noarch.rpm
