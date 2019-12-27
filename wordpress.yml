@@ -31,7 +31,7 @@
         - php-cli
         - php-gd
         - php-curl
-        - php-mysqln
+        - php-mysql
     # PHP
     - name: Get mysql repository
       get_url:
