@@ -9,5 +9,10 @@
     # PHP
     - name: Install PHP
       yum:
-        name: php
+        name: "{{ packages }}"
         state: latest
+      packages:
+      - php
+      - php-fpm
+      - php-mysql
+      - php-xml
