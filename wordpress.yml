@@ -11,7 +11,8 @@
       yum:
         name: "{{ packages }}"
         state: latest
-      packages:
+      vars:
+        packages:
         - php
         - php-fpm
         - php-mysql
