@@ -12,7 +12,7 @@
         name: "{{ packages }}"
         state: latest
       packages:
-      - php
-      - php-fpm
-      - php-mysql
-      - php-xml
+        - php
+        - php-fpm
+        - php-mysql
+        - php-xml
