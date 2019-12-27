@@ -17,3 +17,12 @@
         - php-fpm
         - php-mysql
         - php-xml
+    # MySQL
+    - name: Install MySQL
+      yum:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+        - mysql-server-5.6
+        - python-mysqldb
