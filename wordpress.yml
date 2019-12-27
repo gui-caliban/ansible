@@ -41,7 +41,7 @@
         packages:
         - https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm
     - name: Enable mysql repository
-      shell: yum-config-manager --enable mysql80
+      shell: yum-config-manager --enable mysql80-community-release-el7-1
     - name: Install mysql-server
       yum:
         name: "{{ packages }}"
