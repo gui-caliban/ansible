@@ -16,13 +16,5 @@
         - epel-release
         - yum-utils
         - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-
-    # MySQL
-    - name: Install MySQL
-      yum:
-        name: "{{ packages }}"
-        state: latest
-      vars:
-        packages:
-        - mysql-server
-        - python-mysqldb
+    - name: Enable remi-php73 repository
+      shell: sudo yum-config-manager --enable remi-php73
