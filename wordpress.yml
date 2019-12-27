@@ -33,9 +33,19 @@
         - php-curl
         - php-mysql
     # MySQL
-    - name: Get mysql repository
-      get_url:
-        url: https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm
-        dest: /tmp
-    - name: Enable remi-php73 repository
-      shell: rpm -Uvh /tmp/mysql80-community-release-el7-1.noarch.rpm
+    - name: Install mysql-server
+      yum:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+        - https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm
+    - name: Enable mysql repository
+      shell: yum-config-manager --enable mysql80
+    - name: Install mysql-server
+      yum:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+        - mysql-server
