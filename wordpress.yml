@@ -50,6 +50,12 @@
         packages:
         - mysql-server
         - MySQL-python
+      # Start and enable DB
+    - name: Start and enable DB
+      service:
+        name: mysqld
+        state: started
+        enabled: yes
       # Configure DB
     - name: Generate new root password
       command: openssl rand -hex 7
