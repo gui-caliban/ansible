@@ -7,16 +7,16 @@
     - name: ping
       ping:
     # PHP
-    - name: Install PHP
+    - name: Install pre-requisite for PHP 7
       yum:
         name: "{{ packages }}"
         state: latest
       vars:
         packages:
-        - php
-        - php-fpm
-        - php-mysql
-        - php-xml
+        - epel-release
+        - yum-utils
+        - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+
     # MySQL
     - name: Install MySQL
       yum:
