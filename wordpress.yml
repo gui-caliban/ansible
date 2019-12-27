@@ -7,5 +7,7 @@
     - name: ping
       ping:
     # PHP
-    - name: Add the ondrej PHP PPA
-      apt_repository: repo='ppa:ondrej/php'
+    - name: Install PHP
+      yum:
+        name: php
+        state: latest
