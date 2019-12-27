@@ -24,5 +24,5 @@
         state: latest
       vars:
         packages:
-        - mysql-server-5.6
+        - mysql-server
         - python-mysqldb
