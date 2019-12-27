@@ -1,7 +1,7 @@
 ---
 
 - name: Test ping
-  host: VM
+  hosts: VM
   become: yes
   tasks:
     - name: ping
