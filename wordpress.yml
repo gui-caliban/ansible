@@ -49,3 +49,4 @@
       vars:
         packages:
         - mysql-server
+        - python-mysqldb
