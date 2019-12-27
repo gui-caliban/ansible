@@ -31,4 +31,9 @@
         - php-cli
         - php-gd
         - php-curl
-        - php-mysqlnd
+        - php-mysqln
+    # PHP
+    - name: Get mysql repository
+      get_url:
+        url: https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm
+        dest: /tmp
