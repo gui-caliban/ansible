@@ -49,7 +49,7 @@
       vars:
         packages:
         - mysql-server
-        - mysql-python
+        - MySQL-python
       # Configure DB
     - name: Generate new root password
       command: openssl rand -hex 7
