@@ -49,4 +49,11 @@
       vars:
         packages:
         - mysql-server
-        - python-mysqldb
+      # Configure DB
+      - name: Generate new root password
+        command: openssl rand -hex 7
+        register: mysql_new_root_pass
+      - name: Remove anonymous users
+        mysql_user: name="" state=absent
+      - name: Remove test database
+        mysql_db: name=test state=absent
