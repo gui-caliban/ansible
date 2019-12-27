@@ -1,0 +1,8 @@
+---
+
+- name: Test ping
+  host: VM
+  become: yes
+  tasks:
+    - name: ping
+      ping:
