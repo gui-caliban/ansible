@@ -1,66 +1,146 @@
 ---
 
-- name: Test ping
-  hosts: VM
-  become: yes
+- name: Installation Wordpress
+  become: true
+  hosts: wordpress
   tasks:
-    - name: ping
-      ping:
-    # PHP
-    - name: Install pre-requisite for PHP 7
-      yum:
-        name: "{{ packages }}"
-        state: latest
-      vars:
-        packages:
-        - epel-release
-        - yum-utils
-        - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-    - name: Enable remi-php73 repository
-      shell: yum-config-manager --enable remi-php73
-    - name: Install PHP 7
-      yum:
-        name: "{{ packages }}"
-        state: latest
-      vars:
-        packages:
-        - php
-        - php-common
-        - php-opcache
-        - php-mcrypt
-        - php-cli
-        - php-gd
-        - php-curl
-        - php-mysql
-    # MySQL
-    - name: Install mysql-server
-      yum:
-        name: "{{ packages }}"
-        state: latest
-      vars:
-        packages:
-        - https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm
-    - name: Enable mysql repository
-      shell: yum-config-manager --enable mysql80-community-release-el7-1
-    - name: Install mysql-server
-      yum:
-        name: "{{ packages }}"
-        state: latest
-      vars:
-        packages:
-        - mysql-server
-        - MySQL-python
-      # Start and enable DB
-    - name: Start and enable DB
-      service:
-        name: mysqld
-        state: started
-        enabled: yes
-      # Configure DB
+# PHP
+    - name: Add the ondrej PHP PPA
+      apt_repository:
+        repo: 'ppa:ondrej/php'
+    - name: Install PHP
+      apt:
+        name:
+          - php
+          - php-fpm
+          - php-mysql
+          - php-xml
+        state: present
+    - name: Remove apache2
+      apt:
+        name: apache2
+        state: absent
+# MySQL
+    - name: Install MySQL
+      apt:
+        name:
+          - mysql-server
+          - python-mysqldb
+        state: present
     - name: Generate new root password
       command: openssl rand -hex 7
+      args:
+        creates: /root/.my.cnf---
+
+- name: Installation Wordpress
+  become: true
+  hosts: wordpress
+  tasks:
+# PHP
+    - name: Add the ondrej PHP PPA
+      apt_repository:
+        repo: 'ppa:ondrej/php'
+    - name: Install PHP
+      apt:
+        name:
+          - php
+          - php-fpm
+          - php-mysql
+          - php-xml
+        state: present
+    - name: Remove apache2
+      apt:
+        name: apache2
+        state: absent
+# MySQL
+    - name: Install MySQL
+      apt:
+        name:
+          - mysql-server
+          - python-mysqldb
+        state: present
+    - name: Generate new root password
+      command: openssl rand -hex 7
+      args:
+        creates: /root/.my.cnf
       register: mysql_new_root_pass
     - name: Remove anonymous users
-      mysql_user: name="" state=absent
+      mysql_user:
+        name: ""
+        state: absent
+      when: mysql_new_root_pass.changed
     - name: Remove test database
-      mysql_db: name=test state=absent
+      mysql_db:
+        name: test
+        state: absent
+      when: mysql_new_root_pass.changed
+    - name: Output new root password
+      debug:
+        msg: "New root password is {{mysql_new_root_pass.stdout}}"
+      when: mysql_new_root_pass.changed
+    - name: Update root password
+      mysql_user:
+        name: root
+        host: "{{ item }}"
+        password: "{{ mysql_new_root_pass.stdout }}"
+      loop:
+        - "{{ ansible_hostname }}"
+        - 127.0.0.1
+        - ::1
+        - localhost
+      when: mysql_new_root_pass.changed
+    - name: Create my.cnf
+      template:
+        src: template/mysql/my.cnf
+        dest: /root/.my.cnf
+      when: mysql_new_root_pass.changed
+# nginx
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+
+      register: mysql_new_root_pass
+    - name: Remove anonymous users
+      mysql_user:
+        name: ""
+        state: absent
+      when: mysql_new_root_pass.changed
+    - name: Remove test database
+      mysql_db:
+        name: test
+        state: absent
+      when: mysql_new_root_pass.changed
+    - name: Output new root password
+      debug:
+        msg: "New root password is {{mysql_new_root_pass.stdout}}"
+      when: mysql_new_root_pass.changed
+    - name: Update root password
+      mysql_user:
+        name: root
+        host: "{{ item }}"
+        password: "{{ mysql_new_root_pass.stdout }}"
+      loop:
+        - "{{ ansible_hostname }}"
+        - 127.0.0.1
+        - ::1
+        - localhost
+      when: mysql_new_root_pass.changed
+    - name: Create my.cnf
+      template:
+        src: template/mysql/my.cnf
+        dest: /root/.my.cnf
+      when: mysql_new_root_pass.changed
+# nginx
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started

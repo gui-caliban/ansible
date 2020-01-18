@@ -1,4 +1,7 @@
-VM1 ansible_host=192.168.1.27 ansible_user=root
+ubuntu2 ansible_host=192.168.1.37 ansible_user=root
 
-[VM]
-VM1
+[all]
+ubuntu2
+
+[wordpress]
+ubuntu2
