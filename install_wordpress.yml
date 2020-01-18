@@ -17,20 +17,7 @@
         state: present
 
 
-# nginx
-    - name: Install nginx
-      apt:
-        name: nginx
-        state: present
-    - name: Start nginx
-      service:
-        name: nginx
-        state: started
-    - name: Create nginx config
-      template:
-        src: templates/nginx/default.jinja
-        dest: /etc/nginx/sites-available/default
-      notify: restart nginx
+
 # WordPress
     - name: Unzip WordPress
       unarchive:
@@ -74,9 +61,3 @@
         state: import
         name: wordpress
       when: db_exist.rc > 0
-
-  handlers:
-    - name: restart nginx
-      service:
-        name: nginx
-        state: restarted
