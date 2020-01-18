@@ -4,7 +4,10 @@
   become: true
   hosts: wordpress
   roles:
-    - wp.php
-    - wp.mysql
-    - wp.nginx
-    - wp.wordpress
+    - role: wp.php
+    - role: wp.mysql
+    - role: wp.nginx
+    - role: wp.wordpress
+      database_name: wordpress
+      database_user: wordpress
+      database_password: bananas
