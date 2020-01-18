@@ -30,38 +30,6 @@
     - name: Generate new root password
       command: openssl rand -hex 7
       args:
-        creates: /root/.my.cnf---
-
-- name: Installation Wordpress
-  become: true
-  hosts: wordpress
-  tasks:
-# PHP
-    - name: Add the ondrej PHP PPA
-      apt_repository:
-        repo: 'ppa:ondrej/php'
-    - name: Install PHP
-      apt:
-        name:
-          - php
-          - php-fpm
-          - php-mysql
-          - php-xml
-        state: present
-    - name: Remove apache2
-      apt:
-        name: apache2
-        state: absent
-# MySQL
-    - name: Install MySQL
-      apt:
-        name:
-          - mysql-server
-          - python-mysqldb
-        state: present
-    - name: Generate new root password
-      command: openssl rand -hex 7
-      args:
         creates: /root/.my.cnf
       register: mysql_new_root_pass
     - name: Remove anonymous users
@@ -103,7 +71,6 @@
       service:
         name: nginx
         state: started
-
       register: mysql_new_root_pass
     - name: Remove anonymous users
       mysql_user:
