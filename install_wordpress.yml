@@ -71,3 +71,14 @@
       service:
         name: nginx
         state: started
+    - name: Create nginx config
+      template:
+        src: template/nginx/default
+        dest: /etc/nginx/sites-available/default
+      notify: restart nginx
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
