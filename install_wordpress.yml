@@ -65,7 +65,7 @@
       when: mysql_new_root_pass.changed
     - name: Create my.cnf
       template:
-        src: template/mysql/my.cnf
+        src: templates/mysql/my.cnf
         dest: /root/.my.cnf
       when: mysql_new_root_pass.changed
 # nginx
@@ -79,7 +79,7 @@
         state: started
     - name: Create nginx config
       template:
-        src: template/nginx/default
+        src: templates/nginx/default
         dest: /etc/nginx/sites-available/default
       notify: restart nginx
 # WordPress
@@ -106,6 +106,10 @@
         host: localhost
         password: bananas
         priv: wordpress.*:ALL
+    - name: Create wp-config
+      template:
+        src: templates/wordpress/wp-config.php
+        dest: /var/www/book.example.com/wp-config.php
 
   handlers:
     - name: restart nginx
