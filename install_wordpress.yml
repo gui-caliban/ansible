@@ -93,9 +93,8 @@
         dest: /var/www/book.example.com
         state: directory
     - name: Copy WordPress files
-      synchronize:
-        src: /tmp/wordpres 
-        dest: /var/www/book.example.com
+      command: cp -a /tmp/wordpress/. /var/www/book.example.com
+        creates: /var/www/book.example.com/wp-settings.php
 
   handlers:
     - name: restart nginx
