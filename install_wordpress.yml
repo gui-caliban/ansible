@@ -3,6 +3,11 @@
 - name: Installation Wordpress
   become: true
   hosts: wordpress
+  roles:
+    - wp.php
+    - wp.mysql
+    - wp.nginx
+    - wp.wordpress
   tasks:
 # TOOLS
     - name: Install required tools
@@ -10,22 +15,7 @@
         name:
           - unzip
         state: present
-# PHP
-    - name: Add the ondrej PHP PPA
-      apt_repository:
-        repo: 'ppa:ondrej/php'
-    - name: Install PHP
-      apt:
-        name:
-          - php
-          - php-fpm
-          - php-mysql
-          - php-xml
-        state: present
-    - name: Remove apache2
-      apt:
-        name: apache2
-        state: absent
+
 # MySQL
     - name: Install MySQL
       apt:
