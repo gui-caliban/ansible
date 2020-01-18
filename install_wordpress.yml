@@ -82,7 +82,7 @@
         src: files/wordpress.zip
         dest: /tmp
         copy: no
-      creates: /tmp/wordpress/wp-settings.php
+        creates: /tmp/wordpress/wp-settings.php
 
   handlers:
     - name: restart nginx
