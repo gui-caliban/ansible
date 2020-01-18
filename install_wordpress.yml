@@ -88,6 +88,14 @@
         src: files/wordpress.zip
         dest: /tmp
         creates: /tmp/wordpress/wp-settings.php
+    - name: Create project folder
+      file:
+        dest: /var/www/book.example.com
+        state: directory
+    - name: Copy WordPress files
+      synchronize:
+        src: /tmp/wordpres 
+        dest: /var/www/book.example.com
 
   handlers:
     - name: restart nginx
