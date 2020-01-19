@@ -31,4 +31,4 @@
   package:
     name: httpd
     state: absent
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_distribution == 'CentOS'
