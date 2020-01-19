@@ -10,16 +10,14 @@
     name: nginx
     state: started
 
+- name: Create project folder
+  file:
+    dest: /etc/nginx/sites-available/{{ wp_domain }}
+    state: directory
+
 - name: Create nginx config
   template:
     src: default.j2
     dest: /etc/nginx/sites-available/default
   notify: restart nginx
   when: ansible_distribution == 'Ubuntu'
-
-- name: Create nginx config
-  template:
-    src: default.j2
-    dest: /etc/nginx/conf.d/{{ wp_domain }}.conf
-  notify: restart nginx
-  when: ansible_distribution == 'CentOS'
