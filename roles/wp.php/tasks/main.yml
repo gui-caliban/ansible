@@ -5,7 +5,7 @@
     repo: 'ppa:ondrej/php'
 
 - name: Install PHP
-  apt:
+  package:
     name: "{{ item }}"
     state: present
   loop:
