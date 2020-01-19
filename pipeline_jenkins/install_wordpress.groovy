@@ -18,7 +18,21 @@ checkout([
           submoduleCfg: [],
           userRemoteConfigs: [[credentialsId: '5ac9ae46-07af-42bb-8431-f9d43b564885', url: 'https://github.com/gui-caliban/ansible.git']]
         ])
-}
+       }
+    }
+
+    stage ('Invoke Ansible Playbook install_wordpress.yml on INT plateform') {
+      environment {
+        ANSIBLE_FORCE_COLOR = true
+      }
+      steps {
+        ansiblePlaybook (
+          colorized: true,
+          playbook: 'install_wordpress.yml',
+          inventory: 'inventories/INT/hosts',
+          extras: '${VERBOSE}'
+        )
+      }
     }
 
     stage ('Invoke Ansible Playbook install_wordpress.yml on PROD plateform') {
