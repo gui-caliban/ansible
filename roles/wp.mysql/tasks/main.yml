@@ -46,3 +46,12 @@
     src: mysqld.cnf.j2
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
   when: mysql_new_root_pass.changed
+#iptables -A INPUT -p tcp -i eth0 --dport 3306 -j ACCEPT
+- name: Open 3306 port
+  iptables:
+    chain: INPUT
+    in_interface: eth0
+    protocol: tcp
+    destination_port: 3306
+    jump: ACCEPT
+  when: mysql_new_root_pass.changed
