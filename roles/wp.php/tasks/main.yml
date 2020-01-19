@@ -5,6 +5,12 @@
     repo: 'ppa:ondrej/php'
   when: ansible_distribution == 'Ubuntu'
 
+- name: Ensure repository is installed
+  package:
+    name: "epel-release"
+    state: present
+  when: ansible_distribution == 'CentOS'
+
 - name: Install PHP
   package:
     name: "{{ item }}"
@@ -14,7 +20,7 @@
     - php-fpm
     - php-mysql
     - php-xml
-    - python-apt
+
 
 - name: Remove apache2
   package:
