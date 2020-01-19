@@ -2,7 +2,7 @@
 
 # MySQL
 - name: Install MySQL
-  apt:
+  package:
     name: "{{ item }}"
     state: present
   loop:

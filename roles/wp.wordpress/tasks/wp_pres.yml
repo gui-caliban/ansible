@@ -2,9 +2,8 @@
 
 # TOOLS
 - name: Install required tools
-  apt:
-    name:
-      - unzip
+  package:
+    name: unzip
     state: present
 
 # WordPress

@@ -16,6 +16,6 @@
     - python-apt
 
 - name: Remove apache2
-  apt:
+  package:
     name: apache2
     state: absent
