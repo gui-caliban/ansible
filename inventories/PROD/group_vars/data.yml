@@ -2,3 +2,5 @@
 
 initial_post_title: A que coucou
 initial_post_content: Le wordpress de PROD.
+pres_host: 192.168.1.42
+database_host: 192.168.1.43
