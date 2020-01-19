@@ -7,6 +7,7 @@
     - role: wp.php
     - role: wp.mysql
     - role: wp.nginx
+      wp_domain: book.example.com
     - role: wp.wordpress
       database_name: wordpress
       database_user: wordpress
