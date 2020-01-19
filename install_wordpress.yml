@@ -18,12 +18,6 @@
   hosts: pres
   roles:
     - role: wp.wordpress
-      database_name: wordpress
-      database_user: wordpress
-      database_password: bananas
-      wp_domain: book.example.com
-      initial_post_title: A que coucou
-      initial_post_content: Le wordpress de maurice.
       wp_role: wp_pres
 
 - name: Install wordpress on Data server
@@ -31,10 +25,4 @@
   hosts: data
   roles:
     - role: wp.wordpress
-      database_name: wordpress
-      database_user: wordpress
-      database_password: bananas
-      wp_domain: book.example.com
-      initial_post_title: A que coucou
-      initial_post_content: Le wordpress de maurice.
       wp_role: wp_data
