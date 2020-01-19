@@ -21,8 +21,8 @@
     - php-mysql
     - php-xml
 
-
 - name: Remove apache2
   package:
     name: apache2
     state: absent
+  when: ansible_distribution == 'Ubuntu'
