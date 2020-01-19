@@ -1,7 +1,8 @@
 ---
 
 wp_domain: book.example.com
-database_host: 127.0.0.1:3306
+database_host: 127.0.0.1
+pres_host: 127.0.0.1
 database_name: wordpress
 database_user: wordpress
 database_password: bananas
