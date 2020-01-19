@@ -7,12 +7,13 @@
 - name: Create WordPress MySQL user
   mysql_user:
     name: "{{ database_user }}"
-    host:
-      - localhost
-      - 192.168.1.38
+    host: "{{ item }}"
     password: "{{ database_password }}"
     priv: "{{ database_name }}.*:ALL"
-        
+  loop:
+    - localhost
+    - 192.168.1.38
+
 - name: Does the database exist?
   command: mysql -u root "{{ database_name }}" -e "SELECT ID FROM {{ database_name }}.wp_users LIMIT 1;"
   register: db_exist
