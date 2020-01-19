@@ -12,7 +12,7 @@
     priv: "{{ database_name }}.*:ALL"
   loop:
     - localhost
-    - "{{ database_host }}"
+    - "{{ pres_host }}"
 
 - name: Does the database exist?
   command: mysql -u root "{{ database_name }}" -e "SELECT ID FROM {{ database_name }}.wp_users LIMIT 1;"
