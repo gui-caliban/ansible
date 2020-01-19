@@ -45,4 +45,4 @@
   template:
     src: mysqld.cnf.j2
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
-#  when: mysql_new_root_pass.changed
+  when: mysql_new_root_pass.changed
