@@ -12,7 +12,7 @@
 
 - name: Create project folder
   file:
-    dest: /etc/nginx/sites-available/{{ wp_domain }}
+    dest: /etc/nginx/sites-available
     state: directory
 
 - name: Create nginx config
