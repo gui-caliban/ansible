@@ -10,6 +10,7 @@
       - php-fpm
       - php-mysql
       - php-xml
+      - python-apt
     state: present
 - name: Remove apache2
   apt:
