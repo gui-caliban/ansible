@@ -41,3 +41,8 @@
     src: my.cnf.j2
     dest: /root/.my.cnf
   when: mysql_new_root_pass.changed
+- name: Create my.cnf
+  template:
+    src: mysqld.cnf.j2
+    dest: /etc/mysql/mysql.conf/mysqld.cnf
+#  when: mysql_new_root_pass.changed
