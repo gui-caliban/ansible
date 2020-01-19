@@ -52,6 +52,6 @@
     chain: INPUT
     in_interface: eth0
     protocol: tcp
-    destination_port: 3306
+    destination_port: '3306'
     jump: ACCEPT
-#  when: mysql_new_root_pass.changed
+  when: mysql_new_root_pass.changed
