@@ -13,5 +13,4 @@
       database_password: bananas
       wp_domain: book.example.com
       initial_post_title: A que coucou
-      initial_post_content: >
-      Le wordpress de maurice.
+      initial_post_content: Le wordpress de maurice.
