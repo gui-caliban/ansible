@@ -4,6 +4,7 @@
   mysql_db:
     name: "{{ database_name }}"
     state: present
+
 - name: Create WordPress MySQL user
   mysql_user:
     name: "{{ database_user }}"
@@ -18,11 +19,13 @@
   command: mysql -u root "{{ database_name }}" -e "SELECT ID FROM {{ database_name }}.wp_users LIMIT 1;"
   register: db_exist
   ignore_errors: true
+
 - name: Copy WordPress DB
   template:
     src: wp-database.sql
     dest: /tmp/wp-database.sql
   when: db_exist.rc > 0
+  
 - name: Import WordPress DB
   mysql_db:
     target: /tmp/wp-database.sql

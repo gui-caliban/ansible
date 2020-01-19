@@ -3,14 +3,10 @@
 - name: Add the ondrej PHP PPA
   apt_repository:
     repo: 'ppa:ondrej/php'
+
 - name: Install PHP
   apt:
     name: "{{ item }}"
-      # - php
-      # - php-fpm
-      # - php-mysql
-      # - php-xml
-      # - python-apt
     state: present
   loop:
     - php

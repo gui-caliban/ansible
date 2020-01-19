@@ -1,30 +1,37 @@
 ---
+
 # MySQL
 - name: Install MySQL
   apt:
-    name:
+    name: "{{ item }}"
+    state: present
+    loop:
       - mysql-server
       - python-mysqldb
-    state: present
+
 - name: Generate new root password
   command: openssl rand -hex 7
   args:
     creates: /root/.my.cnf
   register: mysql_new_root_pass
+
 - name: Remove anonymous users
   mysql_user:
     name: ""
     state: absent
   when: mysql_new_root_pass.changed
+
 - name: Remove test database
   mysql_db:
     name: test
     state: absent
   when: mysql_new_root_pass.changed
+
 - name: Output new root password
   debug:
     msg: "New root password is {{mysql_new_root_pass.stdout}}"
   when: mysql_new_root_pass.changed
+
 - name: Update root password
   mysql_user:
     name: root
@@ -36,17 +43,20 @@
     - ::1
     - localhost
   when: mysql_new_root_pass.changed
+
 - name: Create my.cnf
   template:
     src: my.cnf.j2
     dest: /root/.my.cnf
   when: mysql_new_root_pass.changed
+
 - name: Create mysqld.cnf
   template:
     src: mysqld.cnf.j2
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
   when: mysql_new_root_pass.changed
   notify: restart mysql
+  
 #iptables -A INPUT -p tcp -i eth0 --dport 3306 -j ACCEPT
 - name: Open 3306 port
   iptables:

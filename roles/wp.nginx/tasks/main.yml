@@ -4,10 +4,12 @@
   apt:
     name: nginx
     state: present
+
 - name: Start nginx
   service:
     name: nginx
     state: started
+    
 - name: Create nginx config
   template:
     src: default.j2
