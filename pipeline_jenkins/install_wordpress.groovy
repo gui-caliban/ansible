@@ -21,7 +21,7 @@ checkout([
 }
     }
 
-    stage ('Invoke Ansible Playbook install_wordpress.yml on INT plateform') {
+    stage ('Invoke Ansible Playbook install_wordpress.yml on PROD plateform') {
       environment {
         ANSIBLE_FORCE_COLOR = true
       }
@@ -29,7 +29,7 @@ checkout([
         ansiblePlaybook (
           colorized: true,
           playbook: 'install_wordpress.yml',
-          inventory: 'inventories/INT/hosts',
+          inventory: 'inventories/PROD/hosts',
           extras: '${VERBOSE}'
         )
       }

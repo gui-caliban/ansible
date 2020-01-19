@@ -1,0 +1,12 @@
+wordpress_pres ansible_host=192.168.1.38 ansible_user=root
+wordpress_data ansible_host=192.168.1.39 ansible_user=root
+
+[pres]
+wordpress_pres
+
+[data]
+wordpress_data
+
+[wordpress:children]
+pres
+data
