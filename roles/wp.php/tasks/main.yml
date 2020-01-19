@@ -21,18 +21,13 @@
   yum:
     name: "{{ item }}"
     state: present
-    enablerepo: "remi-php70"
+    enablerepo: "remi-php74"
   loop:
     - php
     - php-fpm
     - php-mysql
     - php-xml
   when: ansible_distribution == 'CentOS'
-
-- name: Add repository 'remi-repo'
-  command: rpm -ih http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-  arg:
-    creates: /etc/yum.repos.d/remi.repo
 
 - name: Install PHP
   package:
@@ -43,6 +38,7 @@
     - php-fpm
     - php-mysql
     - php-xml
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Remove apache2
   package:
