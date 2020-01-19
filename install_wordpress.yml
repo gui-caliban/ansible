@@ -16,7 +16,7 @@
 - name: Install wordpress on Pres server
   become: true
   hosts: pres
-  role:
+  roles:
     - role: wp.wordpress
       database_name: wordpress
       database_user: wordpress
