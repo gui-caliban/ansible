@@ -1,4 +1,4 @@
 ---
 # PHP
 - name: Install PHP on Res
-  import_tasks: "{{ ansible_distribution }}".yml
+  import_tasks: '{{ ansible_distribution }}'.yml
