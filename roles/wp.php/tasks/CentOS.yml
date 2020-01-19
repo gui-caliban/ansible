@@ -4,13 +4,11 @@
   package:
     name: "epel-release"
     state: present
-  when: ansible_distribution == 'CentOS'
 
 - name: "remi repo activation"
   yum:
     name: "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
     state: present
-  when: ansible_distribution == 'CentOS'
 
 - name: "install php70 packages"
   yum:
@@ -22,10 +20,8 @@
     - php-fpm
     - php-mysql
     - php-xml
-  when: ansible_distribution == 'CentOS'
 
 - name: Remove httpd
   package:
     name: httpd
     state: absent
-  when: ansible_distribution == 'CentOS'
