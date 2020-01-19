@@ -26,3 +26,9 @@
     name: apache2
     state: absent
   when: ansible_distribution == 'Ubuntu'
+
+- name: Remove httpd
+  package:
+    name: httpd
+    state: absent
+  when: ansible_distribution == 'Ubuntu'
