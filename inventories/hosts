@@ -1,7 +1,0 @@
-ubuntu2 ansible_host=192.168.1.37 ansible_user=root
-
-[all]
-ubuntu2
-
-[wordpress]
-ubuntu2

@@ -1,17 +1,38 @@
 ---
 
-- name: Installation Wordpress
+- name: Install Dependecies on Pres server
   become: true
-  hosts: wordpress
+  hosts: pres
   roles:
     - role: wp.php
-    - role: wp.mysql
     - role: wp.nginx
-      wp_domain: book.example.com
-    - role: wp.wordpress
-      database_name: wordpress
-      database_user: wordpress
-      database_password: bananas
-      wp_domain: book.example.com
-      initial_post_title: A que coucou
-      initial_post_content: Le wordpress de maurice.
+
+- name: Install Dependecies on Data server
+  become: true
+  hosts: data
+  roles:
+    - role: wp.mysql
+
+# - name: Install wordpress on Pres server
+#   become: true
+#   hosts: wordpress
+#   role:
+#     - role: wp.wordpress
+#       database_name: wordpress
+#       database_user: wordpress
+#       database_password: bananas
+#       wp_domain: book.example.com
+#       initial_post_title: A que coucou
+#       initial_post_content: Le wordpress de maurice.
+#
+# - name: Install wordpress on Data server
+#   become: true
+#   hosts: wordpress
+#   roles:
+#     - role: wp.wordpress
+#       database_name: wordpress
+#       database_user: wordpress
+#       database_password: bananas
+#       wp_domain: book.example.com
+#       initial_post_title: A que coucou
+#       initial_post_content: Le wordpress de maurice.
