@@ -1,50 +1,9 @@
 ---
-# TOOLS
-- name: Install required tools
-  apt:
-    name:
-      - unzip
-    state: present
-# WordPress
-- name: Unzip WordPress
-  unarchive:
-    src: wordpress.zip
-    dest: /tmp
-    creates: /tmp/wordpress/wp-settings.php
-- name: Create project folder
-  file:
-    dest: /var/www/{{ wp_domain }}
-    state: directory
-- name: Copy WordPress files
-  command: cp -a /tmp/wordpress/. /var/www/{{ wp_domain }}
-  args:
-    creates: /var/www/{{ wp_domain }}/wp-settings.php
-- name: Create WordPress MySQL database
-  mysql_db:
-    name: "{{ database_name }}"
-    state: present
-- name: Create WordPress MySQL user
-  mysql_user:
-    name: "{{ database_user }}"
-    host: localhost
-    password: "{{ database_password }}"
-    priv: "{{ database_name }}.*:ALL"
-- name: Create wp-config
-  template:
-    src: wp-config.php.j2
-    dest: /var/www/{{ wp_domain }}/wp-config.php
-- name: Does the database exist?
-  command: mysql -u root "{{ database_name }}" -e "SELECT ID FROM {{ database_name }}.wp_users LIMIT 1;"
-  register: db_exist
-  ignore_errors: true
-- name: Copy WordPress DB
-  template:
-    src: wp-database.sql
-    dest: /tmp/wp-database.sql
-  when: db_exist.rc > 0
-- name: Import WordPress DB
-  mysql_db:
-    target: /tmp/wp-database.sql
-    state: import
-    name: "{{ database_name }}"
-  when: db_exist.rc > 0
+
+- name: Install and configure wp on pres
+  import_tasks: wp_pres.yml
+  when: wp_role == "wp_pres"
+
+- name: Install and configure wp on data
+  import_tasks: wp_data.yml
+  when: wp_role == "wp_data"
