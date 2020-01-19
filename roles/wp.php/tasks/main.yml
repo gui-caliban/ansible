@@ -3,6 +3,7 @@
 - name: Add the ondrej PHP PPA
   apt_repository:
     repo: 'ppa:ondrej/php'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Install PHP
   package:
