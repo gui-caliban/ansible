@@ -1,0 +1,22 @@
+---
+# nginx
+- name: Install nginx
+  package:
+    name: nginx
+    state: present
+
+- name: Start nginx
+  service:
+    name: nginx
+    state: started
+
+- name: Create project folder
+  file:
+    dest: /etc/nginx/sites-available/default
+    state: directory
+
+- name: Create nginx config
+  template:
+    src: default.j2
+    dest: /etc/nginx/sites-available/default
+  notify: restart nginx
