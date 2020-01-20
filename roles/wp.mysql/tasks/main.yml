@@ -12,7 +12,7 @@
 
 - name: Install MySQL on CentOS - Donwload sources
   get_url:
-    url: "https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm"
+    url: "http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm"
     dest: /tmp
   when: ansible_distribution == 'CentOS'
 
