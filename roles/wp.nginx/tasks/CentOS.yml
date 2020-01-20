@@ -16,18 +16,6 @@
     name: nginx
     state: started
 
-- name: Create project folder
-  file:
-    dest: /etc/nginx/sites-available
-    state: directory
-
-- name: Create nginx config
-  template:
-    src: default.j2
-    dest: /etc/nginx/sites-available/default
-  when: ansible_distribution == 'Ubuntu'
-  notify: restart nginx
-
 - name: Create nginx config
   template:
     src: default.j2
