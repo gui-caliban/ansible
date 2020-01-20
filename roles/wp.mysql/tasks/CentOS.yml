@@ -40,7 +40,7 @@
 
 - name: "Debug temp_passwd"
   debug:
-    var: temp_passwd.stdout.split(' ')
+    var: temp_passwd.stdout.split(' ')[-1]
 
 - name: Remove anonymous users
   mysql_user:
