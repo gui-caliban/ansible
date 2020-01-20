@@ -14,7 +14,7 @@
 - name: Install MySQL on CentOS - Install MySQL
   yum: 
     name: "{{ item }}"
-    state: installed
+    state: present
   loop:
     - mysql-server
     - MySQL-python
@@ -25,23 +25,17 @@
     creates: /root/.my.cnf
   register: mysql_new_root_pass
 
-- name: Create my.cnf
-  template:
-    src: my.cnf.j2
-    dest: /root/.my.cnf
+- name: Remove anonymous users
+  mysql_user:
+    name: ""
+    state: absent
   when: mysql_new_root_pass.changed
 
-# - name: Remove anonymous users
-#   mysql_user:
-#     name: ""
-#     state: absent
-#   when: mysql_new_root_pass.changed
-
-# - name: Remove test database
-#   mysql_db:
-#     name: test
-#     state: absent
-#   when: mysql_new_root_pass.changed
+- name: Remove test database
+  mysql_db:
+    name: test
+    state: absent
+  when: mysql_new_root_pass.changed
 
 - name: Output new root password
   debug:
@@ -58,6 +52,12 @@
     - 127.0.0.1
     - ::1
     - localhost
+  when: mysql_new_root_pass.changed
+
+- name: Create my.cnf
+  template:
+    src: my.cnf.j2
+    dest: /root/.my.cnf
   when: mysql_new_root_pass.changed
 
 - name: Create mysqld.cnf
