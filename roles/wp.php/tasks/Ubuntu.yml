@@ -1,9 +1,11 @@
 ---
 
+# Ignore errors en cas de pb de mise à jour du repo
 - name: Add the ondrej PHP PPA
   apt_repository:
     repo: 'ppa:ondrej/php'
   when: ansible_distribution == 'Ubuntu'
+  ignore_errors: true
 
 - name: Install PHP
   package:
