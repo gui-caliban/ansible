@@ -33,4 +33,4 @@
   register: php_version
 
 - debug:
-    var: php_version.files[0].path.split("/")[2]
+    var: php_version.files[0].path.split("/")[3]
