@@ -1,9 +1,17 @@
 ---
 
-# - name: Ensure repository is installed
-#   package:
-#     name: "epel-release"
-#     state: present
+- name: "Clean and update yum"
+  command: "{{ yum_command }}"
+  loop:
+    - yum clean all
+    - yum update
+  loop_control:
+    loop_var: yum_command
+
+- name: Ensure repository is installed
+  package:
+    name: "epel-release"
+    state: present
 
 - name: "remi repo activation"
   yum:
