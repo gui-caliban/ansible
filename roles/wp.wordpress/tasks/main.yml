@@ -1,0 +1,9 @@
+---
+
+- name: Install and configure wp on pres
+  import_tasks: wp_pres.yml
+  when: wp_role == "wp_pres"
+
+- name: Install and configure wp on data
+  import_tasks: wp_data.yml
+  when: wp_role == "wp_data"

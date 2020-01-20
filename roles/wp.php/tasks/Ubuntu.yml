@@ -1,0 +1,23 @@
+---
+
+- name: Add the ondrej PHP PPA
+  apt_repository:
+    repo: 'ppa:ondrej/php'
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install PHP
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - php
+    - php-fpm
+    - php-mysql
+    - php-xml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Remove apache2
+  package:
+    name: apache2
+    state: absent
+  when: ansible_distribution == 'Ubuntu'

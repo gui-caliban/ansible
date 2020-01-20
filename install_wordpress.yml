@@ -1,133 +1,28 @@
 ---
 
-- name: Installation Wordpress
+- name: Install Dependecies on Pres server
   become: true
-  hosts: wordpress
-  tasks:
-# TOOLS
-    - name: Install required tools
-      apt:
-        name:
-          - unzip
-        state: present
-# PHP
-    - name: Add the ondrej PHP PPA
-      apt_repository:
-        repo: 'ppa:ondrej/php'
-    - name: Install PHP
-      apt:
-        name:
-          - php
-          - php-fpm
-          - php-mysql
-          - php-xml
-        state: present
-    - name: Remove apache2
-      apt:
-        name: apache2
-        state: absent
-# MySQL
-    - name: Install MySQL
-      apt:
-        name:
-          - mysql-server
-          - python-mysqldb
-        state: present
-    - name: Generate new root password
-      command: openssl rand -hex 7
-      args:
-        creates: /root/.my.cnf
-      register: mysql_new_root_pass
-    - name: Remove anonymous users
-      mysql_user:
-        name: ""
-        state: absent
-      when: mysql_new_root_pass.changed
-    - name: Remove test database
-      mysql_db:
-        name: test
-        state: absent
-      when: mysql_new_root_pass.changed
-    - name: Output new root password
-      debug:
-        msg: "New root password is {{mysql_new_root_pass.stdout}}"
-      when: mysql_new_root_pass.changed
-    - name: Update root password
-      mysql_user:
-        name: root
-        host: "{{ item }}"
-        password: "{{ mysql_new_root_pass.stdout }}"
-      loop:
-        - "{{ ansible_hostname }}"
-        - 127.0.0.1
-        - ::1
-        - localhost
-      when: mysql_new_root_pass.changed
-    - name: Create my.cnf
-      template:
-        src: templates/mysql/my.cnf.jinja
-        dest: /root/.my.cnf
-      when: mysql_new_root_pass.changed
-# nginx
-    - name: Install nginx
-      apt:
-        name: nginx
-        state: present
-    - name: Start nginx
-      service:
-        name: nginx
-        state: started
-    - name: Create nginx config
-      template:
-        src: templates/nginx/default.jinja
-        dest: /etc/nginx/sites-available/default
-      notify: restart nginx
-# WordPress
-    - name: Unzip WordPress
-      unarchive:
-        src: files/wordpress.zip
-        dest: /tmp
-        creates: /tmp/wordpress/wp-settings.php
-    - name: Create project folder
-      file:
-        dest: /var/www/book.example.com
-        state: directory
-    - name: Copy WordPress files
-      command: cp -a /tmp/wordpress/. /var/www/book.example.com
-      args:
-        creates: /var/www/book.example.com/wp-settings.php
-    - name: Create WordPress MySQL database
-      mysql_db:
-        name: wordpress
-        state: present
-    - name: Create WordPress MySQL user
-      mysql_user:
-        name: wordpress
-        host: localhost
-        password: bananas
-        priv: wordpress.*:ALL
-    - name: Create wp-config
-      template:
-        src: templates/wordpress/wp-config.php.jinja
-        dest: /var/www/book.example.com/wp-config.php
-    - name: Does the database exist?
-      command: mysql -u root wordpress -e "SELECT ID FROM wordpress.wp_users LIMIT 1;"
-      register: db_exist
-      ignore_errors: true
-    - name: Copy WordPress DB
-      copy:
-        src: files/wp-database.sql
-        dest: /tmp/wp-database.sql
-      when: db_exist.rc > 0
-    - name: Import WordPress DB
-      mysql_db:
-        target: /tmp/wp-database.sql
-        state: import
-        name: wordpress
-      when: db_exist.rc > 0
+  hosts: pres
+  roles:
+    - role: wp.php
+    - role: wp.nginx
 
-  handlers:
-    - name: restart nginx
-      service:
-        name: nginx
-        state: restarted
+- name: Install Dependecies on Data server
+  become: true
+  hosts: data
+  roles:
+    - role: wp.mysql
+
+- name: Install wordpress on Pres server
+  become: true
+  hosts: pres
+  roles:
+    - role: wp.wordpress
+      wp_role: wp_pres
+
+- name: Install wordpress on Data server
+  become: true
+  hosts: data
+  roles:
+    - role: wp.wordpress
+      wp_role: wp_data
