@@ -5,6 +5,12 @@
     name: nginx
     state: present
 
+- name: Install libselinux_python
+  package: 
+    name: libselinux_python
+    state: present
+  when: ansible_distribution == 'CentOS'
+
 - name: Start nginx
   service:
     name: nginx
