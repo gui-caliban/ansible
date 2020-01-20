@@ -11,9 +11,9 @@
   when: ansible_distribution == 'Ubuntu'
 
 - name: Install MySQL on CentOS - Donwload sources
-  package:
-    name: "https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm"
-    state: present
+  get_url:
+    url: "https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm"
+    dest: /opt/mysql
   when: ansible_distribution == 'CentOS'
 
 - name: Install MySQL on CentOS - Install package
@@ -27,7 +27,7 @@
     name: mysql-server 
     state: installed
   when: ansible_distribution == 'CentOS'
-  
+
 - name: Generate new root password
   command: openssl rand -hex 7
   args:
