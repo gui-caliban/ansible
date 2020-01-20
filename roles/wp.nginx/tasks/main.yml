@@ -30,7 +30,7 @@
   register: php_version
 
 - debug:
-    var: php_version.stdout_lines[0].split[1]
+    var: php_version
 
 - name: Create nginx config
   template:
