@@ -29,7 +29,7 @@ checkout([
         ansiblePlaybook (
           colorized: true,
           playbook: 'install_wordpress.yml',
-          inventory: 'inventories/INT/hosts',
+          inventory: 'inventories/INT_home/hosts',
           extras: '${VERBOSE}'
         )
       }
@@ -43,7 +43,7 @@ checkout([
         ansiblePlaybook (
           colorized: true,
           playbook: 'install_wordpress.yml',
-          inventory: 'inventories/PROD/hosts',
+          inventory: 'inventories/PROD_home/hosts',
           extras: '${VERBOSE}'
         )
       }
