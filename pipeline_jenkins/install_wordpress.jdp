@@ -49,7 +49,7 @@ pipeline {
         ANSIBLE_FORCE_COLOR = true
       }
       steps {
-        withCredentials(string(credentialsId: 'VAULT_PASSWORD', variable: 'VAULT_PASSWORD')) {
+        withCredentials([string(credentialsId: 'VAULT_PASSWORD', variable: 'VAULT_PASSWORD')]) {
           ansiblePlaybook (
             colorized: true,
             playbook: 'playbook_010-install_wordpress.yml',
