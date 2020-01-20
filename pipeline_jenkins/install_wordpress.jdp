@@ -25,6 +25,25 @@ pipeline {
       }
     }
 
+    stage("Preflight check") {
+      steps {
+        ansiblePlaybook (
+          colorized: true,
+          inventory: "inventories/${ansible_environment}/hosts",
+          playbook: "playbook_000-preflight.yml",
+          tags: "ssh-keys",
+          sudoUser: null
+        )
+        ansiblePlaybook (
+          colorized: true,
+          inventory: "inventories/${ansible_environment}/hosts",
+          playbook: "playbook_000-preflight.yml",
+          tags: "facts",
+          sudoUser: null
+        )
+      }
+    }
+
     // stage ('Clonage repo GIT') {
     //   steps {
     //     checkout([
