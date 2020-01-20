@@ -1,15 +1,15 @@
 ---
 
 # MySQL
-- name: Install MySQL on CentOS - Donwload sources
-  get_url:
-    url: "https://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm"
-    dest: /tmp
+# - name: Install MySQL on CentOS - Donwload sources
+#   get_url:
+#     url: "https://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm"
+#     dest: /tmp
 
-- name: Install MySQL on CentOS - Install package
-  yum:
-    name: /tmp/mysql80-community-release-el7-3.noarch.rpm
-    state: present
+# - name: Install MySQL on CentOS - Install package
+#   yum:
+#     name: /tmp/mysql80-community-release-el7-3.noarch.rpm
+#     state: present
 
 - name: Install MySQL on CentOS - Install MySQL
   yum: 
