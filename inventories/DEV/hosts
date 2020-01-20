@@ -1,4 +1,4 @@
-VMMARTIN ansible_host=10.5.169.209 ansible_ssh_private_key_file=./ssh-keys/DEV/id_rsa_VMMARTIN ansible_user=root
+VMMARTIN ansible_host=10.5.169.209 ansible_ssh_private_key_file=./ssh-keys/DEV/id_rsa_VMMARTIN ansible_user=ansible
 
 [pres]
 VMMARTIN
