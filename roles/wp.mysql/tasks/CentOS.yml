@@ -38,9 +38,9 @@
   debug:
     var: temp_passwd
 
-# - name: "Debug temp_passwd"
-#   debug:
-#     var: temp_passwd | regex_replace("[NOTE] A temporary password is generated for root@localhost\\:\\ ", "")
+- name: "Debug temp_passwd"
+  debug:
+    var: temp_passwd.stdout.split(' ')
 
 - name: Remove anonymous users
   mysql_user:
