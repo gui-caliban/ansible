@@ -33,4 +33,4 @@
   register: php_version
 
 - debug:
-    msg: "{{ php_version.files[0].path }}"
+    msg: "{{ php_version.files[0].path.split("/")[2] }}"
