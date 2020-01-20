@@ -45,7 +45,7 @@
 - name: Remove anonymous users
   mysql_user:
     login_user: root
-    login_password: ""
+    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
     name: ""
     state: absent
   when: mysql_new_root_pass.changed
