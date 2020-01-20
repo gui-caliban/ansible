@@ -2,24 +2,24 @@ pipeline {
 
   agent any
 
-options {
-ansiColor("xterm")
-}
+  options {
+    ansiColor("xterm")
+  }
 
-stages {
+  stages {
 
-stage ('Clonage repo GIT') {
-steps {
-checkout([
-          $class: 'GitSCM',
-          branches: [[name: '*/develop']],
-          doGenerateSubmoduleConfigurations: false,
-          extensions: [],
-          submoduleCfg: [],
-          userRemoteConfigs: [[credentialsId: '5ac9ae46-07af-42bb-8431-f9d43b564885', url: 'https://github.com/gui-caliban/ansible.git']]
-        ])
-}
-    }
+    // stage ('Clonage repo GIT') {
+    //   steps {
+    //     checkout([
+    //       $class: 'GitSCM',
+    //       branches: [[name: '*/develop']],
+    //       doGenerateSubmoduleConfigurations: false,
+    //       extensions: [],
+    //       submoduleCfg: [],
+    //       userRemoteConfigs: [[credentialsId: '5ac9ae46-07af-42bb-8431-f9d43b564885', url: 'https://github.com/gui-caliban/ansible.git']]
+    //     ])
+    //   }
+    // }
 
     stage ('Invoke Ansible Playbook install_wordpress.yml') {
       environment {
