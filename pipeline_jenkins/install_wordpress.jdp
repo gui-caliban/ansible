@@ -44,7 +44,7 @@ pipeline {
       }
     }
 
-    stage ('Invoke Ansible Playbook install_wordpress.yml on ${ansible_environment} plateform') {
+    stage ("Invoke Ansible Playbook install_wordpress.yml on ${ansible_environment} plateform") {
       environment {
         ANSIBLE_FORCE_COLOR = true
       }
