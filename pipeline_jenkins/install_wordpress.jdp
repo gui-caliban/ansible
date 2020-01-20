@@ -8,7 +8,7 @@ pipeline {
 
   parameters {
     choice(name: 'VERBOSE', choices: ['Yes', "No"], description: "Choice Yes to have a verbose mode on logs")
-    choice(name: 'ansible_environment', choices: ['DEV, INT, PROD'], description: 'Environment where you want to play your pipeline')
+    choice(name: 'ansible_environment', choices: ['DEV', 'INT', 'PROD'], description: 'Environment where you want to play your pipeline')
   }
 
   stages {
