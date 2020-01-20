@@ -1,0 +1,29 @@
+---
+# Fix permissions on ssh keys
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: set right permissions on ssh key files
+      local_action:
+        command find ./ssh-keys/ -type f -name "id_rsa*" -exec chmod 600 {} \;
+      check_mode: no
+      when: true
+  tags:
+    - preflight
+    - ssh-keys
+
+# Collect facts for better performance afterwards
+- hosts: all
+  remote_user: ansible
+  become: yes
+  become_user: root
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: Collect facts
+      setup:
+        gather_subset:
+          - 'all'
+  tags:
+    - preflight
+    - facts
