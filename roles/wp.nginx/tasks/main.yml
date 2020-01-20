@@ -12,7 +12,7 @@
 
 - name: Create project folder
   file:
-    dest: /etc/nginx/sites-available
+    dest: /etc/nginx/sites-available/default
     state: directory
 
 - name: Create nginx config
