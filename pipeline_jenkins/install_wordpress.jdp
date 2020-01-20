@@ -53,7 +53,7 @@ pipeline {
           colorized: true,
           playbook: 'playbook_010-install_wordpress.yml',
           inventory: 'inventories/${ansible_environment}/hosts',
-          extras: '${LOG_LEVEL}'
+          extras: "${LOG_LEVEL}"
         )
       }
     }
