@@ -1,13 +1,20 @@
 ---
 
 # MySQL
-- name: Install MySQL
+- name: Install MySQL on Ubuntu
   package:
     name: "{{ item }}"
     state: present
   loop:
     - mysql-server
     - python-mysqldb
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install MySQL on CentOS
+  package:
+    name: "mysql-server"
+    state: present
+  when: ansible_distribution == 'CentOS'
 
 - name: Generate new root password
   command: openssl rand -hex 7
