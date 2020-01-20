@@ -55,7 +55,7 @@
     src: mysqld.cnf.j2
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
   when: mysql_new_root_pass.changed
-  notify: restart mysql
+  notify: restart mysql 
 
 - name: Open 3306 port
   iptables:

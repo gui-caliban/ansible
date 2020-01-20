@@ -34,6 +34,10 @@
   command: grep "A temporary password" /var/log/mysqld.log
   register: temp_passwd
 
+- name: "Debug temp_passwd"
+  debug:
+    var: temp_passwd
+
 # - name: "Debug temp_passwd"
 #   debug:
 #     var: temp_passwd | regex_replace("[NOTE] A temporary password is generated for root@localhost\\:\\ ", "")
@@ -80,7 +84,7 @@
     src: mysqld.cnf.j2
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
   when: mysql_new_root_pass.changed
-  notify: restart mysql
+  notify: restart mysqld 
 
 - name: Open 3306 port
   iptables:
