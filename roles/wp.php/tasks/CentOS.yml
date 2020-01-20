@@ -1,9 +1,9 @@
 ---
 
-- name: Ensure repository is installed
-  package:
-    name: "epel-release"
-    state: present
+# - name: Ensure repository is installed
+#   package:
+#     name: "epel-release"
+#     state: present
 
 - name: "remi repo activation"
   yum:
