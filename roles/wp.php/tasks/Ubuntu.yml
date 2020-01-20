@@ -24,3 +24,12 @@
     name: apache2
     state: absent
   when: ansible_distribution == 'Ubuntu'
+
+- name: Check PHP version
+  find:
+    paths: /etc/php
+    patterns: '7.*'
+  register: php_version
+
+- debug:
+  var: php_version
