@@ -1,15 +1,15 @@
 ---
 
 # MySQL
-# - name: Install MySQL on CentOS - Donwload sources
-#   get_url:
-#     url: "https://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm"
-#     dest: /tmp
+- name: Install MySQL on CentOS - Donwload sources
+  get_url:
+    url: "https://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm"
+    dest: /tmp
 
-# - name: Install MySQL on CentOS - Install package
-#   yum:
-#     name: /tmp/mysql80-community-release-el7-3.noarch.rpm
-#     state: present
+- name: Install MySQL on CentOS - Install package
+  yum:
+    name: /tmp/mysql80-community-release-el7-3.noarch.rpm
+    state: present
 
 - name: Install MySQL on CentOS - Install MySQL
   yum: 
@@ -19,14 +19,29 @@
     - mysql-server
     - MySQL-python
 
+- name: Start mysqld.service
+  service:
+    name: mysqld
+    state: started
+
 - name: Generate new root password
   command: openssl rand -hex 7
   args:
     creates: /root/.my.cnf
   register: mysql_new_root_pass
 
+- name: Get default_password
+  command: grep "A temporary password" /var/log/mysqld.log
+  register: temp_passwd
+
+# - name: "Debug temp_passwd"
+#   debug:
+#     var: temp_passwd | regex_replace("[NOTE] A temporary password is generated for root@localhost\\:\\ ", "")
+
 - name: Remove anonymous users
   mysql_user:
+    # login_user: root
+    # login_password: "{{ temp_passwd | regex_replace("\[NOTE]' A temporary password is generated for root@localhost\\:\\ ", "") }}"
     name: ""
     state: absent
   when: mysql_new_root_pass.changed
