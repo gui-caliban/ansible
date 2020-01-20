@@ -4,3 +4,6 @@
   service:
     name: mysql
     state: restarted
+
+- name: pause
+    minutes: '1'
