@@ -13,12 +13,12 @@
 - name: Install MySQL on CentOS - Donwload sources
   get_url:
     url: "https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm"
-    dest: /opt/mysql
+    dest: /tmp
   when: ansible_distribution == 'CentOS'
 
 - name: Install MySQL on CentOS - Install package
   yum:
-    name: /opt/mysql/mysql-community-release-el7-5.noarch.rpm
+    name: /tmp/mysql-community-release-el7-5.noarch.rpm
     state: present
   when: ansible_distribution == 'CentOS'
 
