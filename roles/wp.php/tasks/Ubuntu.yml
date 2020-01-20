@@ -32,4 +32,4 @@
   register: php_version
 
 - debug:
-  var: php_version
+    msg: "{{ php_version }}"
