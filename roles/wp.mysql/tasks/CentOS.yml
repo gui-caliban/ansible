@@ -44,14 +44,16 @@
 
 - name: Remove anonymous users
   mysql_user:
-    # login_user: root
-    # login_password: "{{ temp_passwd | regex_replace("\[NOTE]' A temporary password is generated for root@localhost\\:\\ ", "") }}"
+    login_user: root
+    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
     name: ""
     state: absent
   when: mysql_new_root_pass.changed
   
 - name: Remove test database
   mysql_db:
+    login_user: root
+    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
     name: test
     state: absent
   when: mysql_new_root_pass.changed
@@ -63,6 +65,8 @@
 
 - name: Update root password
   mysql_user:
+    login_user: root
+    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
     name: root
     host: "{{ item }}"
     password: "{{ mysql_new_root_pass.stdout }}"
