@@ -38,14 +38,14 @@
   debug:
     var: temp_passwd
 
-- name: "Debug temp_passwd"
+- name: "Debug temp_passwd (2)"
   debug:
     var: temp_passwd.stdout.split(' ')[-1]
 
 - name: Remove anonymous users
   mysql_user:
     login_user: root
-    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
+    login_password: ""
     name: ""
     state: absent
   when: mysql_new_root_pass.changed
