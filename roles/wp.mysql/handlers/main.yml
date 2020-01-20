@@ -5,5 +5,6 @@
     name: mysql
     state: restarted
 
-- name: pause
-    minutes: '1'
+- name: pause mysql
+    pause:
+      minutes: '1'
