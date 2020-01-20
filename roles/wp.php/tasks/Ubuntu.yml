@@ -28,6 +28,7 @@
 - name: Check PHP version
   find:
     paths: /etc/php
+    file_type: directory
     patterns: '7.*'
   register: php_version
 
