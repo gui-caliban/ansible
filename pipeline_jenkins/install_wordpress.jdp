@@ -51,7 +51,7 @@ pipeline {
       steps {
         ansiblePlaybook (
           colorized: true,
-          playbook: 'install_wordpress.yml',
+          playbook: 'playbook_010-install_wordpress.yml',
           inventory: 'inventories/${ansible_environment}/hosts',
           extras: '${LOG_LEVEL}'
         )
