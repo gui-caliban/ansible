@@ -15,6 +15,16 @@
     dest: /etc/nginx/sites-available
     state: directory
 
+- name: Check PHP version
+  find:
+    paths: /etc/php
+    file_type: directory
+    patterns: '7.*'
+  register: php_version
+
+- debug:
+    var: php_version.files[0].path.split("/")[3]
+
 - name: Create nginx config
   template:
     src: default.j2
