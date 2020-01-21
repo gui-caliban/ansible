@@ -31,12 +31,14 @@ pipeline {
           ANSIBLE_FORCE_COLOR = true
         }
         steps {
-          ansiblePlaybook (
-            colorized: true,
-            playbook: 'install_wordpress.yml',
-            inventory: 'inventories/${ansible_environment}/hosts',
-            extras: '${VERBOSE}'
-          )
+          withCredentials([string(credentialsId: 'VAULT_PASSWORD', variable: 'VAULT_PASSWORD')]) {
+            ansiblePlaybook (
+              colorized: true,
+              playbook: 'install_wordpress.yml',
+              inventory: 'inventories/${ansible_environment}/hosts',
+              extras: '${VERBOSE} --vault-password-file=.vault_pass.py'
+            )
+          }
         }
       }
     }
