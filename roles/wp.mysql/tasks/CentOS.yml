@@ -47,19 +47,19 @@
     msg: "New root password is {{mysql_new_root_pass.stdout}}"
   when: mysql_new_root_pass.changed
 
-- name: Update root password
-  mysql_user:
-    login_user: root
-    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
-    name: root
-    host: "{{ item }}"
-    password: "{{ mysql_new_root_pass.stdout }}"
-  loop:
-    - "{{ ansible_hostname }}"
-    - 127.0.0.1
-    - ::1
-    - localhost
-  when: mysql_new_root_pass.changed
+# - name: Update root password
+#   mysql_user:
+#     login_user: root
+#     login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
+#     name: root
+#     host: "{{ item }}"
+#     password: "{{ mysql_new_root_pass.stdout }}"
+#   loop:
+#     - "{{ ansible_hostname }}"
+#     - 127.0.0.1
+#     - ::1
+#     - localhost
+#   when: mysql_new_root_pass.changed
 
 - name: Update root password
   shell: >
