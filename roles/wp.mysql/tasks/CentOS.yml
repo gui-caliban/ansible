@@ -63,7 +63,7 @@
 
 - name: Update root password
   shell: >
-    mysql -u root -p"{{ temp_passwd.stdout.split(' ')[-1] }}"
+    mysql -u root -NBe
     'ALTER USER "root"@"{{ item }}"
     IDENTIFIED WITH "{{ temp_passwd.stdout.split(' ')[-1] }}" BY "{{ mysql_new_root_pass.stdout }}";'
   loop:
