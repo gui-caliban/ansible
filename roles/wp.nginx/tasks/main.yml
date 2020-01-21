@@ -1,5 +1,12 @@
 ---
 
+- name: Check PHP version
+  command: php --version
+  register: php_version
+
+- debug:
+    var: php_version.stdout.split(" ")[1].split(".")[1]
+
 - name: Install NGINX on Pres
   import_tasks: CentOS.yml
   when: ansible_distribution == 'CentOS'
