@@ -1,4 +1,15 @@
 ---
+#
+# Attention au /etc/resolv.conf qui peut-être vide
+# Après l'avoir implémenté de servername 8.8.8.8 => yum clean all & yum update
+#
+# - name: "Clean and update yum"
+#   command: "{{ yum_command }}"
+#   loop:
+#     - yum clean all
+#     - yum update
+#   loop_control:
+#     loop_var: yum_command
 
 - name: Ensure repository is installed
   package:
