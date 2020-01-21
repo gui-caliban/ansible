@@ -1,39 +1,9 @@
 ---
-# nginx
-- name: Install nginx
-  package:
-    name: nginx
-    state: present
 
-- name: Start nginx
-  service:
-    name: nginx
-    state: started
+- name: Install NGINX on Pres
+  import_tasks: CentOS.yml
+  when: ansible_distribution == 'CentOS'
 
-- name: Create project folder
-  file:
-    dest: /etc/nginx/sites-available
-    state: directory
-
-# - name: Check PHP version
-#   find:
-#     paths: /etc/php
-#     file_type: directory
-#     patterns: '7.*'
-#   register: php_version
-#
-# - debug:
-#     var: php_version.files[0].path.split("/")[3]
-
-- name: Check PHP version
-  command: php --version
-  register: php_version
-
-- debug:
-    var: php_version.stdout.split(" ")[1].split(".")[1]
-
-- name: Create nginx config
-  template:
-    src: default.j2
-    dest: /etc/nginx/sites-available/default
-  notify: restart nginx
+- name: Install NGINX on Pres
+  import_tasks: Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
