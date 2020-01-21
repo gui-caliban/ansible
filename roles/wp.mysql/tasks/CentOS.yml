@@ -44,7 +44,7 @@
 
 - name: Output new root password
   debug:
-    msg: "New root password is {{mysql_new_root_pass.stdout}}"
+    msg: "New root password is {{ mysql_new_root_pass.stdout }}"
   when: mysql_new_root_pass.changed
 
 # - name: Update root password
@@ -65,7 +65,7 @@
   shell: >
     mysql -u root -p"{{ temp_passwd.stdout.split(' ')[-1] }}"
     'ALTER USER "root"@"{{ item }}"
-    IDENTIFIED WITH "{{ temp_passwd.stdout.split(' ')[-1] }}" BY "{{ mysql_new_root_password }}";'
+    IDENTIFIED WITH "{{ temp_passwd.stdout.split(' ')[-1] }}" BY "{{ mysql_new_root_pass.stdout }}";'
   loop:
     - "{{ ansible_hostname }}"
     - 127.0.0.1
