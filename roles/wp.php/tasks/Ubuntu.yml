@@ -1,27 +1,26 @@
 ---
 
-- name: Ensure repository is installed
+# Ignore errors en cas de pb de mise à jour du repo
+- name: Add the ondrej PHP PPA
+  apt_repository:
+    repo: 'ppa:ondrej/php'
+  when: ansible_distribution == 'Ubuntu'
+  ignore_errors: true
+
+- name: Install PHP
   package:
-    name: "epel-release"
-    state: present
-
-- name: "remi repo activation"
-  yum:
-    name: "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
-    state: present
-
-- name: "install php74 packages"
-  yum:
     name: "{{ item }}"
     state: present
-    enablerepo: "remi-php74"
   loop:
     - php
     - php-fpm
     - php-mysql
     - php-xml
+    - python-apt
+  when: ansible_distribution == 'Ubuntu'
 
-- name: Remove httpd
+- name: Remove apache2
   package:
-    name: httpd
+    name: apache2
     state: absent
+  when: ansible_distribution == 'Ubuntu'
