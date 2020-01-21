@@ -8,7 +8,7 @@ pipeline {
 
   parameters {
     choice(name: 'VERBOSE', choices: [' ', "-v", "-vv", "-vvv", "-vvvv"], description: "Choice verbosity on logs")
-    choice(name: 'ansible_environment', choices: ['INT', 'DEV', 'PROD'], description: 'Environment where you want to play your pipeline')
+    choice(name: 'ansible_environment', choices: ['INT_Ubuntu', 'INT_CentOS'], description: 'Environment where you want to play your pipeline')
   }
 
   stages {
