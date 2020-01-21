@@ -1,7 +1,7 @@
 ---
 
 # MySQL
-- name: Install MySQL on CentOS - Donwload sources
+- name: Install MySQL on CentOS - Download sources
   get_url:
     url: "https://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm"
     dest: /tmp
@@ -42,22 +42,6 @@
   debug:
     var: temp_passwd.stdout.split(' ')[-1]
 
-- name: Remove anonymous users
-  mysql_user:
-    login_user: root
-    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
-    name: ""
-    state: absent
-  when: mysql_new_root_pass.changed
-
-- name: Remove test database
-  mysql_db:
-    login_user: root
-    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
-    name: test
-    state: absent
-  when: mysql_new_root_pass.changed
-
 - name: Output new root password
   debug:
     msg: "New root password is {{mysql_new_root_pass.stdout}}"
@@ -75,6 +59,34 @@
     - 127.0.0.1
     - ::1
     - localhost
+  when: mysql_new_root_pass.changed
+
+- name: Update root password
+  shell: >
+    mysql -u root -p"{{ temp_passwd.stdout.split(' ')[-1] }}""
+    'ALTER USER "root"@"{{ item }}"
+    IDENTIFIED WITH ""{{ temp_passwd.stdout.split(' ')[-1] }}"" BY "{{ mysql_root_password }}";'
+  loop:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+  when: mysql_new_root_pass.changed
+
+- name: Remove anonymous users
+  mysql_user:
+    login_user: root
+    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
+    name: ""
+    state: absent
+  when: mysql_new_root_pass.changed
+
+- name: Remove test database
+  mysql_db:
+    login_user: root
+    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
+    name: test
+    state: absent
   when: mysql_new_root_pass.changed
 
 - name: Create my.cnf
