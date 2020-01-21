@@ -63,9 +63,19 @@
 
 - name: Update root password
   shell: >
-    mysql -u root -NBe
-    'ALTER USER "root"@"{{ item }}"
-    IDENTIFIED WITH "{{ temp_passwd.stdout.split(' ')[-1] }}" BY "{{ mysql_new_root_pass.stdout }}";'
+    mysql_secure_installation <<EOF
+    "{{ temp_passwd.stdout.split(' ')[-1] }}"
+    "{{ mysql_new_root_pass.stdout }}"
+    "{{ mysql_new_root_pass.stdout }}"
+    y
+    "{{ mysql_new_root_pass.stdout }}"
+    "{{ mysql_new_root_pass.stdout }}"
+    y
+    y
+    y
+    y
+    y
+    EOF
   loop:
     - "{{ ansible_hostname }}"
     - 127.0.0.1
