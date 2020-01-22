@@ -21,9 +21,9 @@
 - name: Copy WordPress files
   command: cp -a /tmp/wordpress/. {{ wp_root_folder }}
   args:
-    creates: {{ wp_root_folder }}/wp-settings.php
+    creates: "{{ wp_root_folder }}/wp-settings.php"
 
 - name: Create wp-config
   template:
     src: wp-config.php.j2
-    dest: {{ wp_root_folder }}/wp-config.php
+    dest: "{{ wp_root_folder }}/wp-config.php"
