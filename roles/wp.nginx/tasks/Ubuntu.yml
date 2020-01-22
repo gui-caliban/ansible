@@ -15,13 +15,6 @@
     dest: /etc/nginx/sites-available
     state: directory
 
-- name: Check PHP version
-  command: php --version
-  register: php_version
-
-- debug:
-    var: php_version.stdout.split(" ")[1].split(".")[1]
-
 - name: Create nginx config
   template:
     src: default.j2
