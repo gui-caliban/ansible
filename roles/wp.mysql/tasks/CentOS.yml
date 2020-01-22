@@ -14,4 +14,4 @@
 - name: Install Dependecies on Data server
   include_role:
     name: ansible-role-mysql
-      mysql_user_password: "{{ mysql_new_root_pass.stdout }}"
+      - mysql_user_password: "{{ mysql_new_root_pass.stdout }}"
