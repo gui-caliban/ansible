@@ -1,28 +1,19 @@
 ---
-
-# MySQL
-- name: Install MySQL on CentOS - Download sources
-  get_url:
-    url: "https://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm"
-    dest: /tmp
-
-- name: Install MySQL on CentOS - Install package
-  yum:
-    name: /tmp/mysql80-community-release-el7-3.noarch.rpm
-    state: present
-
-- name: Install MySQL on CentOS - Install MySQL
+- name: Ensure MySQL packages are installed.
   yum:
     name: "{{ item }}"
     state: present
   loop:
-    - mysql-server
+    - mariadb
+    - mariadb-server
+    - mariadb-libs
     - MySQL-python
+    - perl-DBD-MySQL
 
-- name: Start mysqld.service
-  service:
-    name: mysqld
-    state: started
+- name: Ensure MySQL Python libraries are installed.
+  yum:
+    name: MySQL-python
+    state: present
 
 - name: Generate new root password
   command: openssl rand -hex 7
@@ -30,93 +21,7 @@
     creates: /root/.my.cnf
   register: mysql_new_root_pass
 
-- name: Get default_password
-  command: grep "A temporary password" /var/log/mysqld.log
-  register: temp_passwd
-
-- name: "Debug temp_passwd"
-  debug:
-    var: temp_passwd
-
-- name: "Debug temp_passwd (2)"
-  debug:
-    var: temp_passwd.stdout.split(' ')[-1]
-
 - name: Output new root password
   debug:
     msg: "New root password is {{ mysql_new_root_pass.stdout }}"
-  when: mysql_new_root_pass.changed
-
-# - name: Update root password
-#   mysql_user:
-#     login_user: root
-#     login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
-#     name: root
-#     host: "{{ item }}"
-#     password: "{{ mysql_new_root_pass.stdout }}"
-#   loop:
-#     - "{{ ansible_hostname }}"
-#     - 127.0.0.1
-#     - ::1
-#     - localhost
-#   when: mysql_new_root_pass.changed
-
-- name: Update root password
-  shell: >
-    mysql_secure_installation <<EOF
-    "{{ temp_passwd.stdout.split(' ')[-1] }}"
-    "{{ mysql_new_root_pass.stdout }}"
-    "{{ mysql_new_root_pass.stdout }}"
-    y
-    "{{ mysql_new_root_pass.stdout }}"
-    "{{ mysql_new_root_pass.stdout }}"
-    y
-    y
-    y
-    y
-    y
-    EOF
-  loop:
-    - "{{ ansible_hostname }}"
-    - 127.0.0.1
-    - ::1
-    - localhost
-  when: mysql_new_root_pass.changed
-
-- name: Remove anonymous users
-  mysql_user:
-    login_user: root
-    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
-    name: ""
-    state: absent
-  when: mysql_new_root_pass.changed
-
-- name: Remove test database
-  mysql_db:
-    login_user: root
-    login_password: "{{ temp_passwd.stdout.split(' ')[-1] }}"
-    name: test
-    state: absent
-  when: mysql_new_root_pass.changed
-
-- name: Create my.cnf
-  template:
-    src: my.cnf.j2
-    dest: /root/.my.cnf
-  when: mysql_new_root_pass.changed
-
-- name: Create mysqld.cnf
-  template:
-    src: mysqld.cnf.j2
-    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
-  when: mysql_new_root_pass.changed
-  notify: restart mysqld
-
-- name: Open 3306 port
-  iptables:
-    chain: INPUT
-    in_interface: eth0
-    protocol: tcp
-    destination_port: '3306'
-    jump: ACCEPT
   when: mysql_new_root_pass.changed
