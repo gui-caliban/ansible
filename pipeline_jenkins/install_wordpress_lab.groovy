@@ -25,7 +25,7 @@ pipeline {
           ])
           sh '''
                ansible-galaxy install -r requirements.yml --roles-path roles/ --force
-               tree
+               ls -alrt roles/
           '''
   			}
       }
