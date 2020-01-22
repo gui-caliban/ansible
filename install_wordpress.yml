@@ -17,8 +17,7 @@
   hosts: data
   become: true
   roles:
-    - role: geerlingguy.mysql
-
+    - role: ansible-role-mysql
 
 # - name: Install wordpress on Pres server
 #   become: true
