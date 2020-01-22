@@ -23,6 +23,9 @@ pipeline {
             submoduleCfg: [],
             userRemoteConfigs: [[credentialsId: 'd35a7e7a-3b40-4772-a2a3-cc2795010ce1', url: 'https://github.com/gui-caliban/ansible.git']]
           ])
+          sh '''
+               ansible-galaxy install -r requirements.yml --roles-path roles/ --force
+          '''
   			}
       }
 
