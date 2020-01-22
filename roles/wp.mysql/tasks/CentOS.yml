@@ -26,14 +26,10 @@
     msg: "New root password is {{ mysql_new_root_pass.stdout }}"
   when: mysql_new_root_pass.changed
 
-- name: Remove anonymous users
+- name: Ensure default user is present.
   mysql_user:
-    name: ""
-    state: absent
-  when: mysql_new_root_pass.changed
-
-- name: Remove test database
-  mysql_db:
-    name: test
-    state: absent
-  when: mysql_new_root_pass.changed
+    name: "test"
+    host: 'localhost'
+    password: "test"
+    priv: '*.*:ALL,GRANT'
+    state: present
