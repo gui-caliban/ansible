@@ -15,6 +15,11 @@
     name: MySQL-python
     state: present
 
+- name: Start mysqld.service
+  service:
+    name: mysqld
+    state: started
+  
 - name: Generate new root password
   command: openssl rand -hex 7
   args:
