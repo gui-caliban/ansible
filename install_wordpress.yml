@@ -7,11 +7,11 @@
     - role: wp.php
     - role: wp.nginx
 
-- name: Install Dependecies on Data server
-  become: true
-  hosts: data
-  roles:
-    - role: wp.mysql
+# - name: Install Dependecies on Data server
+#   become: true
+#   hosts: data
+#   roles:
+#     - role: wp.mysql
 
 # - name: Install wordpress on Pres server
 #   become: true
