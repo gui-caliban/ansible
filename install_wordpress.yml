@@ -13,6 +13,13 @@
 #   roles:
 #     - role: wp.mysql
 
+- name: Install Dependecies on Data server
+  hosts: data
+  become: true
+  roles:
+    - role: geerlingguy.mysql
+
+
 # - name: Install wordpress on Pres server
 #   become: true
 #   hosts: pres
