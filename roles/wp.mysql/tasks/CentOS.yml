@@ -1,25 +1,5 @@
 ---
-- name: Ensure MySQL packages are installed.
-  yum:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - mariadb
-    - mariadb-server
-    - mariadb-libs
-    - MySQL-python
-    - perl-DBD-MySQL
 
-- name: Ensure MySQL Python libraries are installed.
-  yum:
-    name: MySQL-python
-    state: present
-
-- name: Start mysqld.service
-  service:
-    name: mysqld
-    state: started
-  
 - name: Generate new root password
   command: openssl rand -hex 7
   args:
@@ -31,10 +11,7 @@
     msg: "New root password is {{ mysql_new_root_pass.stdout }}"
   when: mysql_new_root_pass.changed
 
-- name: Ensure default user is present.
-  mysql_user:
-    name: "test"
-    host: 'localhost'
-    password: "test"
-    priv: '*.*:ALL,GRANT'
-    state: present
+- name: Install Dependecies on Data server
+  include_role:
+    name: ansible-role-mysql
+      mysql_user_password: "{{ mysql_new_root_pass.stdout }}"
