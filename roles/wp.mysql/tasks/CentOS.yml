@@ -11,7 +11,7 @@
     msg: "New root password is {{ mysql_new_root_pass.stdout }}"
   when: mysql_new_root_pass.changed
 
-- name: Install Dependecies on Data server
-  include_role:
-    name: ansible-role-mysql
-      - mysql_user_password: "{{ mysql_new_root_pass.stdout }}"
+# - name: Install Dependecies on Data server
+#   include_role:
+#     name: ansible-role-mysql
+#       - mysql_user_password: "{{ mysql_new_root_pass.stdout }}"
