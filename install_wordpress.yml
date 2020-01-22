@@ -13,16 +13,16 @@
   roles:
     - role: wp.mysql
 
-- name: Install wordpress on Pres server
-  become: true
-  hosts: pres
-  roles:
-    - role: wp.wordpress
-      wp_role: wp_pres
-
-- name: Install wordpress on Data server
-  become: true
-  hosts: data
-  roles:
-    - role: wp.wordpress
-      wp_role: wp_data
+# - name: Install wordpress on Pres server
+#   become: true
+#   hosts: pres
+#   roles:
+#     - role: wp.wordpress
+#       wp_role: wp_pres
+#
+# - name: Install wordpress on Data server
+#   become: true
+#   hosts: data
+#   roles:
+#     - role: wp.wordpress
+#       wp_role: wp_data
