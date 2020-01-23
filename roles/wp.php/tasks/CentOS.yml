@@ -37,6 +37,7 @@
     - php-xml
     - php-gd
     - php-curl
+    - libselinux-python
 
 - name: Remove httpd
   package:
