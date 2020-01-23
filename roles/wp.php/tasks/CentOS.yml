@@ -49,8 +49,3 @@
     src: www.conf.j2
     dest: /etc/php-fpm.d/www.conf
   notify: restart php-fpm
-
-- name: Enable php-FPM
-  systemd:
-    name: php-fpm
-    enabled: yes
