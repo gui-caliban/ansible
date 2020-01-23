@@ -7,28 +7,22 @@
 #     - role: wp.php
 #     - role: wp.nginx
 
-- name: Install Dependecies on Data server
+# - name: Install Dependecies on Data server
+#   become: true
+#   hosts: data
+#   roles:
+#     - role: wp.mysql
+
+- name: Install wordpress on Pres server
+  become: true
+  hosts: pres
+  roles:
+    - role: wp.wordpress
+      wp_role: wp_pres
+
+- name: Install wordpress on Data server
   become: true
   hosts: data
   roles:
-    - role: wp.mysql
-
-# - name: Install Dependecies on Data server
-#   hosts: data
-#   become: true
-#   roles:
-#     - role: ansible-role-mysql
-#
-# - name: Install wordpress on Pres server
-#   become: true
-#   hosts: pres
-#   roles:
-#     - role: wp.wordpress
-#       wp_role: wp_pres
-#
-# - name: Install wordpress on Data server
-#   become: true
-#   hosts: data
-#   roles:
-#     - role: wp.wordpress
-#       wp_role: wp_data
+    - role: wp.wordpress
+      wp_role: wp_data
