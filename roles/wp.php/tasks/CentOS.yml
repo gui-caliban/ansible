@@ -53,6 +53,7 @@
 - name: Update user and group for /var/lib/php
   file:
     state: directory
+    path: "/var/lib/php"
     owner: root
     group: nginx
     recurse: yes
