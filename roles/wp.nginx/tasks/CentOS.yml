@@ -29,12 +29,7 @@
     group: nginx
     recurse: yes
 
-- name: Restart  php-FPM
+- name: Restart php-FPM
   service:
     name: php-fpm
     state: restarted
-
-- name: Enable php-FPM
-  service:
-    name: php-fpm
-    state: enabled

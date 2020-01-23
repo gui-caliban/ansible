@@ -50,15 +50,6 @@
     dest: /etc/php-fpm.d/www.conf
   notify: restart php-fpm
 
-- name: Update user and group for /var/lib/php
-  file:
-    state: directory
-    path: "/var/lib/php"
-    owner: root
-    group: nginx
-    recurse: yes
-  notify: restart php-fpm
-
 - name: Enable php-FPM
   service:
     name: php-fpm
