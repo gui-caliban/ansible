@@ -11,7 +11,17 @@
     msg: "New root password is {{ mysql_new_root_pass.stdout }}"
   when: mysql_new_root_pass.changed
 
-# - name: Install Dependecies on Data server
-#   include_role:
-#     name: ansible-role-mysql
-#       - mysql_user_password: "{{ mysql_new_root_pass.stdout }}"
+- name: Install Dependecies on Data server
+  include_role:
+    name: ansible-role-mysql
+  vars:
+    mysql_user_password: "{{ mysql_new_root_pass.stdout }}"
+
+- name: Open 3306 port
+  iptables:
+    chain: INPUT
+    in_interface: eth0
+    protocol: tcp
+    destination_port: '3306'
+    jump: ACCEPT
+  when: mysql_new_root_pass.changed
