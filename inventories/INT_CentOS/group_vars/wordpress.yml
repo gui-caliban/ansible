@@ -5,4 +5,4 @@ wp_root_folder: "/var/www/{{ wp_domain }}"
 database_name: wordpress
 database_user: wordpress
 # database_password: bananas
-database_password: vault_database_password
+database_password: "{{ vault_database_password }}"

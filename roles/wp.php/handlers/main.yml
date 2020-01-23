@@ -1,2 +1,5 @@
 ---
-# handlers file for mheap.php
+- name: restart php-fpm
+  service:
+    name: php-fpm
+    state: restarted
