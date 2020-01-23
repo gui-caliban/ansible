@@ -53,7 +53,7 @@
 - name: Update user and group for /var/lib/php
   file:
     state: directory
-    user: root
+    owner: root
     group: nginx
     recurse: yes
   notify: restart php-fpm
