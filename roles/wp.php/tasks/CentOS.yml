@@ -35,7 +35,7 @@
     - php-opcache
     - php-mbstring
     - php-xml
-    - php-gde
+    - php-gd
     - php-curl
     - libselinux-python
 
