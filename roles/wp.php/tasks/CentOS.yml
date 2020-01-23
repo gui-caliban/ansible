@@ -51,6 +51,6 @@
   notify: restart php-fpm
 
 - name: Enable php-FPM
-  service:
+  systemd:
     name: php-fpm
     state: enabled
