@@ -9,7 +9,7 @@
   mysql_user:
     name: "{{ database_user }}"
     host: "{{ item }}"
-    password: "{{ database_password }}"
+    password: "{{ vaul_database_password }}"
     priv: "{{ database_name }}.*:ALL"
   loop:
     - localhost
