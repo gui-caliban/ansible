@@ -27,7 +27,7 @@ pipeline {
                ansible-galaxy install -r requirements.yml --roles-path roles/ --force
                ls -alrt roles/
                ls -alrt
-               chmod +x .vault.py
+               chmod +x .vault_pass.py
                ls -alrt
 
           '''
