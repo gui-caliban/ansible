@@ -34,7 +34,7 @@
 - name: Create default site nginx config
   template:
     src: wordpress_nginx.conf.j2
-    dest: /etc/nginx/site-available/default
+    dest: /etc/nginx/sites-available/default
   notify: restart nginx
   when: ansible_distribution == 'Ubuntu'
 
