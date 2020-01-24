@@ -15,9 +15,12 @@
     name: nginx
     state: started
 
+- set_fact:
+    fpm_sock: /run/php/php7.{{ php_version.stdout.split(" ")[1].split(".")[1] }}-fpm.sock
+
 - name: Create defaul site nginx config
   template:
-    src: default_CentOS.j2
+    src: default.j2
     dest: /etc/nginx/conf.d/default.conf
   notify: restart nginx
 

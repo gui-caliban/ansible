@@ -1,5 +1,12 @@
 ---
 # nginx
+- name: Check PHP version
+  command: php --version
+  register: php_version
+
+- debug:
+    var: php_version.stdout.split(" ")[1].split(".")[1]
+
 - name: Install nginx
   package:
     name: nginx
