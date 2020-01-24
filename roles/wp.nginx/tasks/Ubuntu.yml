@@ -5,7 +5,7 @@
   register: php_version
 
 - debug:
-    var: php_version.stdout.split(" ")[1].split(".")[1]
+    var: php_version.stdout
 
 - set_fact:
     fpm_sock: /run/php/php7.{{ php_version.stdout.split(" ")[1].split(".")[1] }}-fpm.sock
