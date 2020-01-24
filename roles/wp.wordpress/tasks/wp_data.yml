@@ -22,26 +22,26 @@
 
 - name: Copy WordPress DB
   template:
-    src: wp-database.sql
-    dest: /tmp/wp-database-ubuntu.sql
+    src: wp-database-ubuntu.sql
+    dest: /tmp/wp-database.sql
   when: db_exist.rc > 0 and ansible_distribution == 'Ubuntu'
 
 - name: Import WordPress DB
   mysql_db:
-    target: /tmp/wp-database-ubuntu.sql
+    target: /tmp/wp-database.sql
     state: import
     name: "{{ database_name }}"
   when: db_exist.rc > 0 and ansible_distribution == 'Ubuntu'
 
 - name: Copy WordPress DB
   template:
-    src: wp-database.sql
-    dest: /tmp/wp-database-centos.sql
+    src: wp-database-centos.sql
+    dest: /tmp/wp-database.sql
   when: db_exist.rc > 0 and ansible_distribution == 'CentOS'
 
 - name: Import WordPress DB
   mysql_db:
-    target: /tmp/wp-database-centos.sql
+    target: /tmp/wp-database.sql
     state: import
     name: "{{ database_name }}"
   when: db_exist.rc > 0 and ansible_distribution == 'CentOS'
