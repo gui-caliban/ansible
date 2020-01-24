@@ -7,6 +7,9 @@
 - debug:
     var: php_version.stdout.split(" ")[1].split(".")[1]
 
+- set_fact:
+    fpm_sock: /run/php/php7.{{ php_version.stdout.split(" ")[1].split(".")[1] }}-fpm.sock
+
 - name: Install nginx
   package:
     name: nginx
