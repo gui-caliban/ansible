@@ -32,4 +32,4 @@
   hosts: pres
   tasks:
     - debug:
-        var: "{{ vault_database_password }}"
+        var: "{{ database_password }}"
