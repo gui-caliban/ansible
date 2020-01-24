@@ -16,7 +16,7 @@
     state: started
 
 - set_fact:
-    fpm_sock: /run/php/php7.{{ php_version.stdout.split(" ")[1].split(".")[1] }}-fpm.sock
+    fpm_sock: /run/php-fpm/www.sock
 
 - name: Create defaul site nginx config
   template:
