@@ -4,3 +4,73 @@
   roles:
     - role: "ansible-docker"
       tags: ["docker"]
+
+
+- hosts: all
+  become: yes
+  tasks:
+    - name: install docker-python
+      yum:
+        name: docker-python
+        state: latest
+
+    - name: Creation rep /opt/wordpress
+      file:
+        path: /opt/wordpress
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Creation rep /opt/wordpress/database
+      file:
+        path: /opt/wordpress/database
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Creation rep /opt/wordpress/html
+      file:
+        path: /opt/wordpress/html
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Creation du container de la BDD
+      docker_container:
+        name: wordpressdb_docker
+        image: mariadb
+        state: started
+        volumes:
+          - "/opt/wordpress/database:/var/lib/mysql:rw"
+        env:
+          MYSQL_ROOT_PASSWORD: "password"
+          MYSQL_USER: "wpuser"
+          MYSQL_PASSWORD: "password"
+          MYSQL_DATABASE: "wordpress_db"
+
+
+    - name: Creation du container wordpress
+      docker_container:
+        name: wpcontainer_docker
+        image: wordpress
+        state: started
+        links:
+          - "wordpressdb_docker:mysql"
+        volumes:
+          - "/opt/wordpress/html:/var/www/html:rw"
+        ports:
+          - "8001:80"
+        env:
+          WORDPRESS_DB_USER: "wpuser"
+          WORDPRESS_DB_PASSWORD: "password"
+          WORDPRESS_DB_NAME: "wordpress_db"
+
+    - name: Check container
+      command: docker ps
+      register: container_run
+
+    - debug:
+        var: container_run.stdout_lines
