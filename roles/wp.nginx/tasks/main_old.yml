@@ -1,9 +1,0 @@
----
-
-- name: Install NGINX on Pres
-  import_tasks: CentOS.yml
-  when: ansible_distribution == 'CentOS'
-
-- name: Install NGINX on Pres
-  import_tasks: Ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
