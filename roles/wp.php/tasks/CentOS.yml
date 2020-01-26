@@ -27,15 +27,11 @@
     state: present
     enablerepo: "remi-php72"
   loop:
-    #- php
     - php-cli
     - php-fpm
     - php-mysql
     - php-json
-    #- php-opcache
-    #- php-mbstring
     - php-xml
-    #- php-gd
     - php-curl
     - libselinux-python
 

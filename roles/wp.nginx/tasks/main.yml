@@ -74,3 +74,8 @@
     protocol: tcp
     destination_port: '80'
     jump: ACCEPT
+
+- firewalld:
+    port: 80/tcp
+    permanent: yes
+    state: disabled

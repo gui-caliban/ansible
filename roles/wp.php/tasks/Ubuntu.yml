@@ -16,7 +16,6 @@
     - php-fpm
     - php-mysql
     - php-xml
-    #- python-apt
   when: ansible_distribution == 'Ubuntu'
 
 - name: Remove apache2
