@@ -9,10 +9,10 @@
 - hosts: all
   become: yes
   tasks:
-    - name: install docker-python
-      apt:
-        name: docker-python
-        state: latest
+    # - name: install docker-python
+    #   apt:
+    #     name: docker-python
+    #     state: latest
 
     - name: Creation rep /opt/wordpress
       file:
