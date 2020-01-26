@@ -26,10 +26,3 @@
   roles:
     - role: wp.wordpress
       wp_role: wp_data
-
-# - name: Install wordpress on Pres server
-#   become: true
-#   hosts: pres
-#   tasks:
-#     - debug:
-#         var: "{{ vault_database_password }}"

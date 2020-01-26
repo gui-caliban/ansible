@@ -1,6 +1,0 @@
----
-
-wp_domain: book.example.com
-database_name: wordpress
-database_user: wordpress
-database_password: bananas
