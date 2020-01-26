@@ -1,0 +1,11 @@
+wordpress_centos ansible_host=192.168.1.45 ansible_user=root
+
+[pres]
+wordpress_centos
+
+[data]
+wordpress_centos
+
+[wordpress:children]
+pres
+data
