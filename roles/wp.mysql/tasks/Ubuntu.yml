@@ -9,7 +9,7 @@
     - mysql-server
     - python-mysqldb
 
-- sleep:
+- pause:
     minutes: 1
 
 - name: Generate new root password
