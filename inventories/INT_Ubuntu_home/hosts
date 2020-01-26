@@ -1,0 +1,11 @@
+wordpress_ubuntu ansible_host=10.5.169.83 ansible_user=root
+
+[pres]
+wordpress_ubuntu
+
+[data]
+wordpress_ubuntu
+
+[wordpress:children]
+pres
+data
