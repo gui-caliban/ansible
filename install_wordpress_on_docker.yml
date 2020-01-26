@@ -10,7 +10,7 @@
   become: yes
   tasks:
     - name: install docker-python
-      yum:
+      apt:
         name: docker-python
         state: latest
 
