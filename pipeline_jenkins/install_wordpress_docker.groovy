@@ -38,7 +38,7 @@ pipeline {
           withCredentials([string(credentialsId: 'VAULT_PASSWORD', variable: 'VAULT_PASSWORD')]) {
             ansiblePlaybook (
               colorized: true,
-              playbook: 'install_wordpresson_docker.yml',
+              playbook: 'install_wordpress_on_docker.yml',
               inventory: 'inventories/${ansible_environment}/hosts',
               extras: '${VERBOSE} --vault-password-file=.vault_pass.py'
             )
