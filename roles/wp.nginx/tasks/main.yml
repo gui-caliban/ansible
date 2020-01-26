@@ -66,3 +66,12 @@
     name: php-fpm
     state: restarted
   when: ansible_distribution == 'CentOS'
+
+- name: Open 80 port
+  iptables:
+    chain: INPUT
+    in_interface: eth0
+    protocol: tcp
+    destination_port: '80'
+    jump: ACCEPT
+  when: mysql_new_root_pass.changed
