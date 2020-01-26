@@ -1,4 +1,4 @@
-wordpress_ubuntu ansible_host=192.168.1.47 ansible_user=root
+wordpress_ubuntu ansible_host=192.168.1.48 ansible_user=root
 
 [pres]
 wordpress_ubuntu
