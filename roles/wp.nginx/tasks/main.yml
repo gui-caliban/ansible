@@ -75,8 +75,7 @@
     destination_port: '80'
     jump: ACCEPT
 
-# - firewalld:
-#     port: 80/tcp
-#     permanent: yes
-#     state: disabled
-#   when: ansible_distribution == 'CentOS'
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
